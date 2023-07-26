@@ -15,20 +15,29 @@ class SuperTuxDataset(Dataset):
         WARNING: Do not perform data normalization here. 
         """
         self.path = dataset_path
-        self.image_files = [file for file in os.listdir(dataset_path) if file.endswith(".jpg")]
-        self.labels = pd.read_csv(os.path.join(dataset_path, 'labels.csv'))['label'].tolist()
+
+        # Images
+        image_files = [file for file in os.listdir(dataset_path) if file.endswith(".jpg")]
+        image_paths = [os.path.join(dataset_path, x) for x in image_files]
+        transform = transforms.Compose([transforms.ToTensor()])
+        self.images = [Image.open(x).convert("RGB") for x in image_paths]
+        self.image_tensors = [transform(x) for x in self.images]
+        # Labels
+        self.str_labels = pd.read_csv(os.path.join(dataset_path, 'labels.csv'))['label'].tolist()
+        label_dict = {"background": 0, "kart": 1, "pickup": 2, "nitro": 3, "bomb": 4, "projectile": 5}
+        self.int_labels = [label_dict[x] for x in self.str_labels]
 
     def __len__(self):
-        return len(self.image_files)
+        return len(self.int_labels)
 
     def __getitem__(self, idx):
         """
         Your code here
         return a tuple: img, label
         """
-        image_path = os.path.join(self.path, self.image_files[idx])
-        image = Image.open(image_path).convert("RGB")
-        label = self.labels[idx]
+        image = self.image_tensors[idx]
+        label = self.int_labels[idx]
+
         return image, label
 
 
@@ -44,4 +53,5 @@ def accuracy(outputs, labels):
 
 PATH = r"C:\Users\Will\OneDrive\Desktop\State Farm\UT Austin Deep Learning\homework1\data\train"
 ds = SuperTuxDataset(PATH)
+
 
