@@ -8,8 +8,8 @@ def train(args):
 
     # Hyperparamaters
     batch_size = 128
-    learning_rate = .001
-    num_epochs = 9
+    learning_rate = .005
+    num_epochs = 20
 
     # Data loading
     train_loader = load_data(r"/home/bojangles/Desktop/UT_Austin_NLP/UTAustin_hw1/data/train")
