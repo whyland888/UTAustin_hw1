@@ -1,0 +1,29 @@
+Loading assignment
+Loading grader
+ * SuperTuxDataset                                   
+  - SuperTuxDataset.__getitem__                        [ passed ]
+  - image statistics                                   [ passed ]
+  - label statistics                                   [ passed ]
+  - SuperTuxDataset.__len__                            [ passed ]
+ --------------------------------------------------    [  15 /  15 ]
+
+ * LinearModel                                       
+  - Linearity                                          [ passed ]
+  - Shape                                              [ passed ]
+ --------------------------------------------------    [  15 /  15 ]
+
+ * Loss                                              
+  - ClassificationLoss.forward                         [ passed ]
+ --------------------------------------------------    [  10 /  10 ]
+
+ * TrainedLinearModel                                
+  - Accuracy                                           [ accuracy = 0.697 ]
+ --------------------------------------------------    [  30 /  30 ]
+
+ * TrainedMLPModel                                   
+  - Accuracy                                           [ accuracy = 0.747 ]
+ --------------------------------------------------    [  25 /  30 ]
+
+
+total score                                               95 / 100
+
