@@ -7,13 +7,13 @@ import torch
 def train(args):
 
     # Hyperparamaters
-    batch_size = 64
+    batch_size = 128
     learning_rate = .001
-    num_epochs = 10
+    num_epochs = 9
 
     # Data loading
-    train_loader = load_data(r"C:\Users\Will\OneDrive\Desktop\State Farm\UT Austin Deep Learning\homework1\data\train")
-    valid_loader = load_data(r"C:\Users\Will\OneDrive\Desktop\State Farm\UT Austin Deep Learning\homework1\data\valid")
+    train_loader = load_data(r"/home/bojangles/Desktop/UT_Austin_NLP/UTAustin_hw1/data/train")
+    valid_loader = load_data(r"/home/bojangles/Desktop/UT_Austin_NLP/UTAustin_hw1/data/valid")
 
     model = model_factory[args.model]()
     criterion = ClassificationLoss()
@@ -30,7 +30,7 @@ def train(args):
             optimizer.step()
 
             train_loss += loss.item()
-            print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {train_loss / len(train_loader):.4f}")
+        print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {train_loss / len(train_loader):.4f}")
 
         # Validation
         model.eval()

@@ -17,13 +17,15 @@ class SuperTuxDataset(Dataset):
         self.path = dataset_path
 
         # Images
-        image_files = [file for file in os.listdir(dataset_path) if file.endswith(".jpg")]
+        image_files = pd.read_csv(os.path.join(dataset_path, 'labels.csv'))['file'].tolist()
         image_paths = [os.path.join(dataset_path, x) for x in image_files]
         transform = transforms.Compose([transforms.ToTensor()])
         self.images = [Image.open(x).convert("RGB") for x in image_paths]
         self.image_tensors = [transform(x) for x in self.images]
+
         # Labels
         self.str_labels = pd.read_csv(os.path.join(dataset_path, 'labels.csv'))['label'].tolist()
+        # print(self.str_labels[0:10])
         label_dict = {"background": 0, "kart": 1, "pickup": 2, "nitro": 3, "bomb": 4, "projectile": 5}
         self.int_labels = [label_dict[x] for x in self.str_labels]
 
@@ -51,7 +53,9 @@ def accuracy(outputs, labels):
     return outputs_idx.eq(labels).float().mean()
 
 
-PATH = r"C:\Users\Will\OneDrive\Desktop\State Farm\UT Austin Deep Learning\homework1\data\train"
-ds = SuperTuxDataset(PATH)
+# PATH = r"/home/bojangles/Desktop/UT_Austin_NLP/UTAustin_hw1/data/train"
+#
+# ds = SuperTuxDataset(dataset_path=PATH)
+# print(ds[0][0].shape)
 
 
